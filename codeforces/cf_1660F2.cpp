@@ -1,7 +1,10 @@
+//2100 Promising String
 #include <iostream>
-#include <cmath>
+#include <string>
 #include <vector>
+
 #define ll long long
+
 class FenwickTree{
 private:
     std::vector<std::vector<ll>> mod;
@@ -32,10 +35,27 @@ public:
 };
 
 int main(){
-    std::vector<int> list(3,0);
-    int x=1;
-    list[x++] = 5;
-    for (int num:list) std::cout << num << ", ";
-    std::cout << std::endl;
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+
+    int t, n, pre;
+    ll res=0;
+    std::string s;
+    std::cin >> t;
+    for (int i=0; i<t; i++){
+        res = 0;
+        std::cin >> n;
+        std::cin >> s;
+        pre = 0;
+        FenwickTree BIT(n);
+        pre = (s[0]=='+')*2-1;
+        BIT.update(pre);
+        for (int j=1; j<n; j++){
+            pre += (s[j]=='+')*2-1;
+            if (pre <= 0 && pre%3==0) res++;
+            res += BIT.update(pre);
+        }
+        std::cout << res << std::endl;
+    }
     return 0;
 }
