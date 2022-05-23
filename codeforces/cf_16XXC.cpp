@@ -16,7 +16,19 @@ int main(){
     int t;
     std::cin >> t;
     while (t--){
-
+        int n, c=1, m;
+        std::cin >> n;
+        m = n;
+        std::vector<int> a(n);
+        for (int i=0; i<n; i++) std::cin >> a[i];
+        std::sort(a.begin(), a.end());
+        for (int i=1; i<n; i++){
+            if (a[i]==a[i-1]){
+                c++;
+                if (c>2) m--;
+            }else c=1;
+        }
+        std::cout << (m+1)/2 << std::endl;
     }
     return 0;
 }

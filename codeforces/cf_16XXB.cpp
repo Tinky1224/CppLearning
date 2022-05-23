@@ -16,7 +16,15 @@ int main(){
     int t;
     std::cin >> t;
     while (t--){
-
+        int n, X=1;
+        std::cin >> n;
+        while (X < n) X = X*2+1;
+        std::vector<int> a(n);
+        for (int i=0; i<n; i++) {
+            std::cin >> a[i];
+            if (a[i]!=i) X &= a[i];
+        }
+        std::cout << X << std::endl;
     }
     return 0;
 }

@@ -1,37 +1,7 @@
-#include <iostream>
-#include <cmath>
-#include <vector>
-#include <algorithm>
-#define ll long long
-
-class FenwickTree{
-private:
-    std::vector<std::vector<ll>> mod;
-public:
-    int base, L;
-    FenwickTree(int n){
-        mod = std::vector<std::vector<ll>> (3, std::vector<ll> ((n*2+1)/3+10, 0));
-        base = n;
-        L = (n*2+1)/3+10;
-    }
-    ll update(int ind){
-        int m = (ind+300000)%3, new_ind=(ind+base)/3+2, res;
-        res = get(L-1,m) - get(new_ind-1, m);
-        while (new_ind < L){
-            mod[m][new_ind] += 1;
-            new_ind += (new_ind & -new_ind);
-        }
-        return res;
-    };
-    ll get(int ind, int m){
-        ll total = 0;
-        while (ind > 0){
-            total += mod[m][ind];
-            ind -= (ind & -ind);
-        }
-        return total;
-    }
-};
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<cmath>
 
 class SegmentTree{
     private:
@@ -48,6 +18,10 @@ class SegmentTree{
                 min = val;
             }else{
                 int mid = (left+right)/2;
+//                SegmentTree L(left, mid, vals);
+//                SegmentTree R(mid+1, right, vals);
+//                leftNode = &L;
+//                rightNode = &R;
                 leftNode = new SegmentTree(left, mid, vals);
                 rightNode = new SegmentTree(mid+1, right, vals);
                 sum = leftNode->sum +  rightNode->sum;
@@ -114,33 +88,14 @@ class SegmentTree{
 };
 
 int main(){
-    int n, q, type, x, y, x1, y1, x2, y2;
-    std::cin >> n >> q;
-    std::vector<int> r(n,0), c(n,0);
-    SegmentTree row(0, n-1, r), col(0, n-1, c);
-    while (q--){
-        std::cin >> type;
-        if (type == 3){
-            std::cin >> x1 >> y1 >> x2 >> y2;
-            if (row.query_sum(x1-1, x2-1) == x2-x1+1 || col.query_sum(y1-1, y2-1) == y2-y1+1){
-                std::cout << "YES" << std::endl;
-            }else{
-                std::cout << "NO" << std::endl;
-            }
-        }else{
-                std::cin >> x >> y;
-                if (type == 1){
-                    r[x-1]++;
-                    c[y-1]++;
-                    if (r[x-1] == 1) row.update(x-1, 1);
-                    if (c[y-1] == 1) col.update(y-1, 1);
-                }else{
-                    r[x-1]--;
-                    c[y-1]--;
-                    if (r[x-1] == 0) row.update(x-1, 0);
-                    if (c[y-1] == 0) col.update(y-1, 0);
-                }
-            }
-    }
+    std::vector<int> vals{1,2,3,4,5,6};
+    SegmentTree tree(0, 5, vals);
+    std::cout << (tree.query_sum(0,5)) << std::endl;
+    tree.update(1,10);
+    std::cout << (tree.query_sum(0,5)) << std::endl;
+    tree.update(2,10);
+    std::cout << (tree.query_sum(0,5)) << std::endl;
+    tree.update(5,0);
+    std::cout << (tree.query_sum(0,5)) << std::endl;
     return 0;
 }

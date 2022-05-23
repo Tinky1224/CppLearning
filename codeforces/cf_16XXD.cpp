@@ -16,6 +16,18 @@ int main(){
     int t;
     std::cin >> t;
     while (t--){
+        int n, odd=0, even=0;
+        std::cin >> n;
+        std::string s;
+        std::cin >> s;
+        for (char c:s){
+            if (c=='0') even++;
+            else odd++;
+        }
+        if (odd%2 || odd < 2){
+            std::cout << "NO" << std::endl;
+            continue;
+        }
 
     }
     return 0;

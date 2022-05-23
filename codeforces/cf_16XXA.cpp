@@ -16,7 +16,25 @@ int main(){
     int t;
     std::cin >> t;
     while (t--){
-
+        int n, res=0, mid, l, r;
+        std::cin >> n;
+        std::string s;
+        std::cin >> s;
+        if (n==2){
+            std::cout << 2 << std::endl;
+            continue;
+        }
+        mid = n/2;
+        l = mid;
+        r = mid;
+        while (l >= 0 && s[l]==s[mid]){
+            l--;
+        }
+        while (r < n && s[r]==s[mid]){
+            r++;
+        }
+        res = r-l-1;
+        std::cout << res << std::endl;
     }
     return 0;
 }
